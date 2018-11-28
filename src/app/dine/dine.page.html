@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Dine</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+    <ion-grid>
+        <ion-row>
+            <ng-container *ngFor="let table of tables; let i=index">
+            <ion-col size="2" (click)="presentPopover($event)">
+                <ion-item  style="background-color: #0ec254; cursor: pointer">
+                    <ion-avatar slot="start">
+                        <img src="../../assets/images/dinngtable.png" />
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>Table {{i}}</h2>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+            </ng-container>
+        </ion-row>
+
+    </ion-grid>
+</ion-content>

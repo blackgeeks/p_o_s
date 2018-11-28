@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{resturent?.name}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+
+
+
+    <ion-row justify-content-center align-items-center style="height: 100%">
+    <ion-col >
+        <ion-button color="success" size="large" expand="block" (click)="Dine()">Dine</ion-button>
+
+    </ion-col>
+    <ion-col>
+        <ion-button color="success"  size="large" expand="block"  (click)="delievery()">Delivery</ion-button>
+
+    </ion-col>
+    <ion-col>
+        <ion-button  color="success" size="large" expand="block" (click)="takeaway()">Take Away</ion-button>
+
+    </ion-col>
+    </ion-row>
+</ion-content>
