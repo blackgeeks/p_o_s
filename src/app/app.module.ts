@@ -11,13 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import {PopoverPageModule} from './popover/popover.module';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import {MenupopverPageModule} from './menu/components/menupopver/menupopver.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,      IonicStorageModule.forRoot(),
 
-      PopoverPageModule],
+      PopoverPageModule, MenupopverPageModule],
   providers: [
     StatusBar,
     SplashScreen,

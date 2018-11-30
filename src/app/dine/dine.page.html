@@ -10,7 +10,7 @@
     <ion-grid>
         <ion-row>
             <ng-container *ngFor="let table of tables; let i=index">
-            <ion-col size="2" (click)="presentPopover($event)">
+            <ion-col size="2" (click)="openMenuModal()">
                 <ion-item  style="background-color: #0ec254; cursor: pointer">
                     <ion-avatar slot="start">
                         <img src="../../assets/images/dinngtable.png" />

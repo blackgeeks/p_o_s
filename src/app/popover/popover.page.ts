@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {PopoverController} from '@ionic/angular';
+import {ModalController, PopoverController} from '@ionic/angular';
 
 @Component({
   selector: 'app-popover',
@@ -9,14 +9,14 @@ import {PopoverController} from '@ionic/angular';
 })
 export class PopoverPage implements OnInit {
 
-  constructor(private router: Router,public popoverCtrl: PopoverController) { }
+  constructor(private router: Router,public modalCtrl: ModalController) { }
 
   ngOnInit() {
   }
 
   menu(event){
     console.log(event);
-    this.popoverCtrl.dismiss();
+    this.modalCtrl.dismiss();
       this.router.navigate(['/menu']);
 
   }

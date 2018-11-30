@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{item?.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row >
+      <ion-col size="2">
+      </ion-col>
+      <ion-col size="4">
+        Servings
+      </ion-col>
+
+      <ion-col size="2">
+        Price (RS)
+      </ion-col >
+
+      <ion-col size="1"></ion-col>
+      <ion-col size="3">
+        Action
+      </ion-col>
+
+      <ng-container  *ngFor="let serving of item?.menuItemTypesById; let i=index">
+        <ng-container *ngIf="serving.deleted==false">
+          <ion-col size="2">
+            <ion-item>     <ion-radio [id]="i" [value]="serving.id" [checked]="isChecked" name="s" (change)="!isChecked" (click)="!isChecked"></ion-radio></ion-item>
+          </ion-col>
+      <ion-col size="4">
+        <h5>{{serving.serving}}</h5>
+
+      </ion-col>
+
+        <ion-col size="2">
+          <h5>{{serving.price}}</h5>
+
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-button color="success"  expand="block"  >Add </ion-button>
+
+        </ion-col>
+        </ng-container>
+      </ng-container>
+    </ion-row>
+  </ion-grid>
+
+  <!--<p *ngIf="adOns">AdOns Here.</p>-->
+  <ion-grid>
+    <ion-row>
+      <ng-container *ngFor="let adon of adOns">
+      <ion-col size="6">
+        <p>{{adon?.addOnCategory?.name}} ({{adon?.addOnCategory?.allowedItems}}) </p>
+
+        <ng-container *ngFor="let item of adon?.addOnCategory?.addOnItemsById">
+         <ion-item> <ion-checkbox color="success"> </ion-checkbox> <ion-label style="margin-left:5%; ">{{item.name}} - ({{item.price }} RS) </ion-label></ion-item>
+        </ng-container>
+      </ion-col>
+      </ng-container>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button color="success"  expand="block" (click)="addtoCart()"  >Add to Cart </ion-button>
+
+</ion-content>
