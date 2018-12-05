@@ -76,6 +76,8 @@
                             <h5 style="font-size: 15px"> Sub Total: {{cartService.getSubtotal()}}</h5>
                             <ion-button color="success"  expand="block" *ngIf="edit=='false'" (click)="placeorder()"  >Place Order </ion-button>
                             <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="placeorder()"  >Update Order </ion-button>
+                            <ion-button color="danger"  expand="block" (click)="cancelorder()"  >Cancel Order </ion-button>
+
                             <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="printInv()"  > Print Invoice </ion-button>
                             <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="settlment()"  > Settlement </ion-button>
 

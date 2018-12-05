@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {ModalController, PopoverController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {MenupopverPage} from './components/menupopver/menupopver.page';
 import {CartserviceService} from '../services/cartservice.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -22,7 +22,7 @@ export class MenuPage implements OnInit {
     menu: any;
     selectedCatItems: any;
 
-    constructor(private storage: Storage, private router: Router,
+    constructor(private storage: Storage, private router: Router, public alertController: AlertController,
                 public modalCtrl: ModalController, private toastManager: ToastmanagerService,
                 public cartService: CartserviceService, private route: ActivatedRoute) {
         //
@@ -2011,6 +2011,7 @@ export class MenuPage implements OnInit {
         });
         await modal.present();
     }
+
     placeorder() {
 
         this.toastManager.presentToastWithCustomOptions('Order Placed');
@@ -2072,8 +2073,41 @@ export class MenuPage implements OnInit {
         });
     }
 
-    settlment(){
+    async presentAlertConfirm() {
+        const alert = await this.alertController.create({
+            header: 'Are you Sure!',
+            message: 'Cancel Order???',
+            buttons: [
+                {
+                    text: 'No, Get me back',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Yes',
+                    handler: () => {
+                        this.toastManager.presentToastWithCustomOptions('Order Cancelled');
 
-        this.openSettlementModal()
+                        this.router.navigate(['']);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
+
+
+    cancelorder() {
+
+        this.presentAlertConfirm();
+    }
+
+    settlment() {
+
+        this.openSettlementModal();
+    }
+
 }
