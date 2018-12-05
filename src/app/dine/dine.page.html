@@ -10,16 +10,45 @@
     <ion-grid>
         <ion-row>
             <ng-container *ngFor="let table of tables; let i=index">
-            <ion-col size="2" (click)="openMenuModal()">
+                <ng-container *ngIf="table.status=='empty'" >
+            <ion-col size="2" (click)="openMenuModal(table.name)">
                 <ion-item  style="background-color: #0ec254; cursor: pointer">
                     <ion-avatar slot="start">
                         <img src="../../assets/images/dinngtable.png" />
                     </ion-avatar>
                     <ion-label>
-                        <h2>Table {{i}}</h2>
+                        <h2>{{table.name}}</h2>
                     </ion-label>
                 </ion-item>
             </ion-col>
+                </ng-container>
+
+                <ng-container *ngIf="table.status=='on going'" >
+                    <ion-col size="2" (click)="gotoMenu(table.name)">
+                        <ion-item  style="background-color: #d33939; cursor: pointer">
+                            <ion-avatar slot="start">
+                                <img src="../../assets/images/dinngtable.png" />
+                            </ion-avatar>
+                            <ion-label>
+                                <h2>{{table.name}}</h2>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ng-container>
+
+
+                <ng-container *ngIf="table.status=='bill processing'" >
+                    <ion-col size="2" (click)="gotoMenu(table.name)">
+                        <ion-item  style="background-color: #0bb8cc; cursor: pointer">
+                            <ion-avatar slot="start">
+                                <img src="../../assets/images/dinngtable.png" />
+                            </ion-avatar>
+                            <ion-label>
+                                <h2>{{table.name}}</h2>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ng-container>
             </ng-container>
         </ion-row>
 

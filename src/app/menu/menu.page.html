@@ -1,57 +1,97 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>menu</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>menu</ion-title>
+    </ion-toolbar>
 </ion-header>
-
 
 
 <ion-content padding>
 
-
-  <ion-grid>
-    <ion-row >
-        <ion-col size="2" style="overflow: scroll; height: 85vh;">
-          <ion-list>
-              <ng-container *ngFor="let category of menu">
-            <ion-item (click)="selectItems(category.id)" >
-              <p style="cursor: pointer" >{{category.name | titlecase}}</p>
-            </ion-item>
-              </ng-container>
-          </ion-list>
-        </ion-col>
-      <ion-col size="10">
-        <ion-row style="height: 85vh">
-          <ion-col size="8">
-<ion-row>
-<ng-container *ngFor="let item of selectedCatItems">
-  <ion-col size="4" style="cursor: pointer" (click)="openMenuModal(item)">
-    <ion-item  style="background-color: #0ec254; cursor: pointer">
-      <!--<ion-avatar slot="start">-->
-      <!--<img src="../../assets/images/dinngtable.png" />-->
-      <!--</ion-avatar>-->
-      <ion-label>
-        <h2>{{item?.name}}</h2>
-      </ion-label>
-    </ion-item>
-  </ion-col>
-</ng-container>
-
+    <ion-grid>
+        <ion-row>
+            <ion-col size="2" style="overflow: scroll; height: 85vh;">
+                <ion-list>
+                    <ng-container *ngFor="let category of menu">
+                        <ion-item (click)="selectItems(category.id)">
+                            <p style="cursor: pointer">{{category.name | titlecase}}</p>
+                        </ion-item>
+                    </ng-container>
+                </ion-list>
+            </ion-col>
+            <ion-col size="10">
+                <ion-row style="height: 85vh">
+                    <ion-col size="8">
+                        <ion-row>
+                            <ng-container *ngFor="let item of selectedCatItems">
+                                <ion-col size="4" style="cursor: pointer" (click)="openMenuModal(item)">
+                                    <ion-item style="background-color: #0ec254; cursor: pointer">
+                                        <!--<ion-avatar slot="start">-->
+                                        <!--<img src="../../assets/images/dinngtable.png" />-->
+                                        <!--</ion-avatar>-->
+                                        <ion-label>
+                                            <h2>{{item?.name}}</h2>
+                                        </ion-label>
+                                    </ion-item>
+                                </ion-col>
+                            </ng-container>
 
 
-</ion-row>
+                        </ion-row>
+
+
+                    </ion-col>
+                    <ion-col size="4">
+
+                        <h5>Order Information ( {{table}} )</h5>
+
+                        <ion-item>
+
+                            <ion-label>
+                                {{waiter}}
+                            </ion-label>
+                            <ion-label>
+                                {{type}}
+                            </ion-label>
+                        </ion-item>
+                        <ng-container *ngIf="cartService.getItems().length>0">
+
+                            <ion-card>
+                                <ion-card-content *ngFor="let item of cartService.getItems()">
+
+                                    <ion-icon name="remove" (click)="removeitemfromCart(item)"></ion-icon>
+                                    <ion-label class="custom-font"> <b>{{item.itemName}}</b></ion-label>
+                                    <ion-label class="custom-font"> {{item.itemServing}}</ion-label>
+                                    <ion-label class="custom-font"><b> {{item.price}}</b></ion-label>
+                                    <ion-label class="custom-font"> {{item.itemsCount}}</ion-label>
+
+                                    <div *ngFor="let adon of item.adOns">
+                                        <p>{{adon.adonName}} ( {{adon.adonprice}} )</p>
+
+                                    </div>
+                                </ion-card-content>
+                            </ion-card>
 
 
 
-          </ion-col>
-          <ion-col size="4">
-Cart Goes Here
-          </ion-col>
+                            <h5 style="font-size: 15px"> Sub Total: {{cartService.getSubtotal()}}</h5>
+                            <ion-button color="success"  expand="block" *ngIf="edit=='false'" (click)="placeorder()"  >Place Order </ion-button>
+                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="placeorder()"  >Update Order </ion-button>
+                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="printInv()"  > Print Invoice </ion-button>
+                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="settlment()"  > Settlement </ion-button>
+
+                        </ng-container>
+                        <ng-container *ngIf="cartService.getItems().length===0">
+                            <ion-item>
+                                <ion-label>No Item in Cart yet!</ion-label>
+                            </ion-item>
+                        </ng-container>
+
+                    </ion-col>
+                </ion-row>
+
+            </ion-col>
+
         </ion-row>
 
-      </ion-col>
-
-    </ion-row>
-
-  </ion-grid>
+    </ion-grid>
 </ion-content>

@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ModalController, PopoverController} from '@ionic/angular';
+import {ModalController, NavParams} from '@ionic/angular';
 
 @Component({
-  selector: 'app-popover',
-  templateUrl: './popover.page.html',
-  styleUrls: ['./popover.page.scss'],
+    selector: 'app-popover',
+    templateUrl: './popover.page.html',
+    styleUrls: ['./popover.page.scss'],
 })
 export class PopoverPage implements OnInit {
 
-  constructor(private router: Router,public modalCtrl: ModalController) { }
+    type = '';
+    table = '';
 
-  ngOnInit() {
-  }
+    constructor(public navParams: NavParams, private router: Router, public modalCtrl: ModalController) {
+    }
 
-  menu(event){
-    console.log(event);
-    this.modalCtrl.dismiss();
-      this.router.navigate(['/menu']);
+    ngOnInit() {
+        this.type = this.navParams.get('type');
+        this.table = this.navParams.get('table');
+    }
 
-  }
+    menu(event, waiter: any) {
+        console.log(event);
+        this.modalCtrl.dismiss();
+        this.router.navigate(['/menu'], {queryParams: {type: this.type, table: this.table, waiter: waiter, edit:false}});
+
+    }
 }

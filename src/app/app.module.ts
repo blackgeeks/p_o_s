@@ -1,30 +1,40 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
 import {PopoverPageModule} from './popover/popover.module';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { IonicStorageModule } from '@ionic/storage';
+import {NativeStorage} from '@ionic-native/native-storage/ngx';
+import {IonicStorageModule} from '@ionic/storage';
 import {MenupopverPageModule} from './menu/components/menupopver/menupopver.module';
-
+import { SQLite} from '@ionic-native/sqlite/ngx';
+import {SettlementpopoverPage} from './menu/components/settlementpopover/settlementpopover.page';
+import {SettlementpopoverPageModule} from './menu/components/settlementpopover/settlementpopover.module';
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,      IonicStorageModule.forRoot(),
+    declarations: [AppComponent,
 
-      PopoverPageModule, MenupopverPageModule],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-      NativeStorage,
-  ],
-  bootstrap: [AppComponent]
+    ],
+    entryComponents: [],
+    imports: [BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        IonicStorageModule.forRoot(),
+        PopoverPageModule,
+        SettlementpopoverPageModule,
+        MenupopverPageModule],
+    providers: [
+        StatusBar,
+        SQLite,
+        SplashScreen,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        NativeStorage,
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

@@ -4,6 +4,9 @@ import {NavController} from '@ionic/angular';
 
 import {NativeStorage} from '@ionic-native/native-storage/ngx';
 import {Storage} from '@ionic/storage';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import {DatabaseService} from '../services/database/database.service';
+
 
 @Component({
     selector: 'app-home',
@@ -15,7 +18,7 @@ export class HomePage {
     resturent: any;
 
     constructor(private router: Router, private navCtrl: NavController,
-                private nativeStorage: NativeStorage, private storage: Storage) {
+                private nativeStorage: NativeStorage, private storage: Storage,private dbService: DatabaseService) {
 
         this.storage.set('resturent', {
             'id': 3,
@@ -45,10 +48,50 @@ export class HomePage {
             console.log('error while retreiving resturent');
         });
 
+
+
+
+        this.storage.get('tables').then((data) => {
+
+            console.log(data);
+
+            if(data){
+                // alert('hi')
+            }
+            else {
+
+                this.storage.set('tables', [{
+                        name: 'Table 0',
+                        status: 'empty'
+                    },
+                        {
+                            name: 'Table 1',
+                            status: 'empty'
+                        },
+                        {
+                            name: 'Table 2',
+                            status: 'empty'
+                        },
+                        {
+                            name: 'Table 3',
+                            status: 'empty'
+                        }]
+                );
+            }
+
+
+        }, error => {
+            console.log('error while retreiving resturent');
+        });
+
+
+        // this.dbService.getData()
     }
 
+
+
     Dine() {
-        this.router.navigate(['/dine']);
+        this.router.navigate(['/dine'], { queryParams: { type: 'dine' } });
         // this.navCtrl.navigateForward('/dine');
     }
 
