@@ -1,39 +1,86 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ModalController, PopoverController} from '@ionic/angular';
 import {PopoverPage} from '../popover/popover.page';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
+import {LocalinfoService} from '../services/resturent/localinfo.service';
 
 @Component({
     selector: 'app-dine',
     templateUrl: './dine.page.html',
     styleUrls: ['./dine.page.scss'],
 })
-export class DinePage implements OnInit {
+export class DinePage implements OnInit , AfterViewInit{
 
     tables = [];
+    isLoaded=false;
 
     type = '';
 
-    constructor(private router: Router,public popoverController: PopoverController, public modalCtrl: ModalController,
+    constructor(private router: Router, public popoverController: PopoverController, public resturentInfo: LocalinfoService,
+                public modalCtrl: ModalController,
                 private storage: Storage, private route: ActivatedRoute) {
+
+
         this.storage.get('tables').then((data) => {
 
-            console.log(data);
             this.tables = data;
+            console.log(data);
+
         }, error => {
-            console.log('error while retreiving resturent');
+            console.log('error while getting tables');
+
+            setTimeout(() => {
+                this.storage.get('tables').then((data) => {
+
+                    this.tables = data;
+                    console.log(data);
+
+                }, error => {
+                    console.log('error while getting tables');
+
+                });
+
+
+            }, 3000);
         });
 
 
     }
 
     ngOnInit() {
+
+        this.isLoaded=false;
+
         this.route.queryParams.subscribe(params => {
             this.type = params['type'];
-        });
+            this.storage.get('tables').then((data) => {
 
-        let result = this.isTableActive('Table 0');
+                this.tables = data;
+                this.isLoaded=true;
+
+                console.log(data);
+
+            }, error => {
+                console.log('error while getting tables');
+
+            });
+
+
+        })
+
+
+
+    }
+    ngAfterViewInit(){
+        this.storage.get('tables').then((data) => {
+
+            this.tables = data;
+            console.log(data);
+
+        }, error => {
+            console.log('error while getting tables');
+        });
 
     }
 
@@ -71,4 +118,20 @@ export class DinePage implements OnInit {
         this.router.navigate(['/menu'], {queryParams: {type: 'dine', edit: true, table: tablename}});
 
     }
+
+    refreshtablestats() {
+
+        console.log('refresh')
+            this.storage.get('tables').then((data) => {
+
+                this.tables = data;
+
+            }, error  => {
+                console.log('error while getting tables');
+            });
+
+
+
+    }
+
 }

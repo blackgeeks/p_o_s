@@ -1,11 +1,15 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>menu</ion-title>
+        <ion-label style="padding-right:5% "><a  routerLink="" >{{resturentInfo.getResturentName()}}</a></ion-label>
+
+        <ion-label>menu</ion-label>
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
+
+    <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
     <ion-grid>
         <ion-row>
@@ -74,8 +78,11 @@
 
 
                             <h5 style="font-size: 15px"> Sub Total: {{cartService.getSubtotal()}}</h5>
-                            <ion-button color="success"  expand="block" *ngIf="edit=='false'" (click)="placeorder()"  >Place Order </ion-button>
-                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="placeorder()"  >Update Order </ion-button>
+                            <h5 style="font-size: 15px"> Tax: {{cartService.getTax() }} %</h5>
+                            <h5 style="font-size: 15px"> Grand Total: {{cartService.getGrandTotal()  | number:'1.2-2' }}</h5>
+
+                            <ion-button color="success"  expand="block" *ngIf="edit=='false'" (click)="confirmationbeforePlaceorder()"  >Place Order </ion-button>
+                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="confirmationbeforePlaceorder()"  >Update Order </ion-button>
                             <ion-button color="danger"  expand="block" (click)="cancelorder()"  >Cancel Order </ion-button>
 
                             <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="printInv()"  > Print Invoice </ion-button>

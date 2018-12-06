@@ -13,8 +13,8 @@ import {NativeStorage} from '@ionic-native/native-storage/ngx';
 import {IonicStorageModule} from '@ionic/storage';
 import {MenupopverPageModule} from './menu/components/menupopver/menupopver.module';
 import { SQLite} from '@ionic-native/sqlite/ngx';
-import {SettlementpopoverPage} from './menu/components/settlementpopover/settlementpopover.page';
 import {SettlementpopoverPageModule} from './menu/components/settlementpopover/settlementpopover.module';
+import { TablesComponent } from './components/tables/tables.component';
 @NgModule({
     declarations: [AppComponent,
 

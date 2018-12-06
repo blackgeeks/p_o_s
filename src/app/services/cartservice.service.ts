@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Item} from '../sharedclasses/invoiceitems';
+import {Storage} from '@ionic/storage';
 
 @Injectable({
     providedIn: 'root'
@@ -10,9 +11,24 @@ export class CartserviceService {
 
 
     subTotal: number;
+    tax: any;
+    grandTotal: number;
 
-    constructor() {
+    constructor(private storage: Storage) {
         this.subTotal = 0;
+        this.tax = 0;
+        this.grandTotal = 0;
+
+        this.storage.get('branch').then((data) => {
+
+            this.tax = data.tax;
+            console.log(this.tax);
+
+
+            if (data) {
+                console.log(data);
+            }
+        });
     }
 
     public setItem(name: any, serving: any, itemPrice: number, count: number) {
@@ -24,13 +40,13 @@ export class CartserviceService {
         return this.items;
     }
 
-    removeItemfromcart(item:any) {
-        console.log(item)
-        console.log(this.items)
+    removeItemfromcart(item: any) {
+        console.log(item);
+        console.log(this.items);
 
         let index = this.items.findIndex(obj => obj.itemName === item.itemName);
         console.log(index);
-        if(index>-1){
+        if (index > -1) {
             this.items.splice(index, 1);
 
         }
@@ -48,5 +64,17 @@ export class CartserviceService {
             }
         }
         return this.subTotal;
+    }
+
+    getGrandTotal() {
+        this.grandTotal = 0;
+        this.grandTotal = ((this.subTotal / 100) * this.tax) + this.subTotal;
+
+        return this.grandTotal;
+
+    }
+
+    getTax() {
+       return this.tax;
     }
 }

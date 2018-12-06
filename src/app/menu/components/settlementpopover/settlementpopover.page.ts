@@ -41,21 +41,33 @@ export class SettlementpopoverPage implements OnInit {
                 }, {
                     text: 'Yes',
                     handler: () => {
-                      if(this.amount-this.cartService.getSubtotal() >= 0){
+                      if(this.amount-this.cartService.getGrandTotal() >= 0){
                           this.storage.get('tables').then((data) => {
 
-                              console.log(data);
                               for (let table of data) {
                                   if (table.name == this.table) {
                                       table.status = 'empty';
                                       this.modalCtrl.dismiss()
-                                      this.router.navigate(['']);
 
                                   }
                               }
 
                               console.log(data);
+
+                              this.storage.remove('tables');
                               this.storage.set('tables', data);
+
+                              setTimeout(() => {
+                                  this.storage.get('tables').then((data) => {
+                                      console.log(data)
+                                  })
+
+                              }, 100);
+                              setTimeout(() => {
+                                  this.router.navigate(['/home'])
+
+                              }, 500);
+
                           }, error => {
                               console.log('error while retreiving resturent');
                           });

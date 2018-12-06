@@ -6,6 +6,8 @@ import {CartserviceService} from '../services/cartservice.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastmanagerService} from '../services/toast/toastmanager.service';
 import {SettlementpopoverPage} from './components/settlementpopover/settlementpopover.page';
+import {LocalinfoService} from '../services/resturent/localinfo.service';
+import {TablesinfoService} from '../services/tables/tablesinfo.service';
 
 @Component({
     selector: 'app-menu',
@@ -22,8 +24,8 @@ export class MenuPage implements OnInit {
     menu: any;
     selectedCatItems: any;
 
-    constructor(private storage: Storage, private router: Router, public alertController: AlertController,
-                public modalCtrl: ModalController, private toastManager: ToastmanagerService,
+    constructor(private storage: Storage, private router: Router, public alertController: AlertController, public  tableInfo: TablesinfoService,
+                public modalCtrl: ModalController, private toastManager: ToastmanagerService,public resturentInfo: LocalinfoService,
                 public cartService: CartserviceService, private route: ActivatedRoute) {
         //
         // this.storage.set('menu', [
@@ -1902,7 +1904,7 @@ export class MenuPage implements OnInit {
         //                 'menuItemTypesById': [
         //                     {
         //                         'id': 4607,
-        //                         'price': 2000,
+        //                         'price': 200,
         //                         'serving': 'Charges',
         //                         'created': '2018-09-14T13:02:14.000+0000',
         //                         'modified': '2018-11-27T09:01:15.000+0000',
@@ -2028,13 +2030,21 @@ export class MenuPage implements OnInit {
             for (let table of data) {
                 if (table.name == this.table) {
                     table.status = 'on going';
-                    this.router.navigate(['']);
+
 
                 }
             }
 
             console.log(data);
+            this.storage.remove('tables');
+
             this.storage.set('tables', data);
+
+
+            setTimeout(() => {
+                this.router.navigate(['']);
+            }, 200);
+
         }, error => {
             console.log('error while retreiving resturent');
         });
@@ -2061,13 +2071,20 @@ export class MenuPage implements OnInit {
             for (let table of data) {
                 if (table.name == this.table) {
                     table.status = 'bill processing';
-                    this.router.navigate(['']);
+
 
                 }
             }
 
             console.log(data);
+            this.storage.remove('tables');
+
             this.storage.set('tables', data);
+
+            setTimeout(() => {
+                this.router.navigate(['']);
+            }, 200);
+
         }, error => {
             console.log('error while retreiving resturent');
         });
@@ -2091,6 +2108,30 @@ export class MenuPage implements OnInit {
                         this.toastManager.presentToastWithCustomOptions('Order Cancelled');
 
                         this.router.navigate(['']);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    async confirmationbeforePlaceorder() {
+        const alert = await this.alertController.create({
+            header: 'Order Confirmation!',
+            message: 'Is Order Completed?',
+            buttons: [
+                {
+                    text: 'No, Get me back',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Yes',
+                    handler: () => {
+                       this.placeorder()
                     }
                 }
             ]
