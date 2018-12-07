@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Transfer Table</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label>Table #: (Which needs to tranfer)</ion-label>
+    <ion-select [(ngModel)]="occupiedTableSected" ok-text="Okay" cancel-text="Dismiss" placeholder="Select One Table" (ionChange)="selectOccupiedTable()">
+     <ng-container  *ngFor="let table of tableInfo.occupiedTables">
+      <ion-select-option [value]="table?.name">{{table?.name}}</ion-select-option>
+     </ng-container>
+    </ion-select>
+
+
+
+  </ion-item>
+  <ion-item>
+    <ion-label>Table #: (Where to transfer)</ion-label>
+    <ion-select [(ngModel)]="FreeTableSected" ok-text="Okay" cancel-text="Dismiss" placeholder="Select One Table" (ionChange)="selectFreeTable()">
+      <ng-container  *ngFor="let table of tableInfo.freeTables">
+        <ion-select-option [value]="table?.name">{{table?.name}}</ion-select-option>
+      </ng-container>
+    </ion-select>
+
+  </ion-item>
+
+  <ion-button color="success" expand="block" (click)="transferTable()">Transfer Table</ion-button>
+
+
+</ion-content>

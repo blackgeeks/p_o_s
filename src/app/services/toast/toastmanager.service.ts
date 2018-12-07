@@ -13,8 +13,8 @@ export class ToastmanagerService {
             message: message,
             showCloseButton: true,
             position: 'middle',
-            closeButtonText: 'Done',
-            duration: 2000
+            closeButtonText: 'OK',
+            duration: 1000
         });
         toast.present();
     }

@@ -57,14 +57,11 @@ export class SettlementpopoverPage implements OnInit {
                               this.storage.remove('tables');
                               this.storage.set('tables', data);
 
-                              setTimeout(() => {
-                                  this.storage.get('tables').then((data) => {
-                                      console.log(data)
-                                  })
 
-                              }, 100);
                               setTimeout(() => {
-                                  this.router.navigate(['/home'])
+                                  // this.router.navigate(['/home'])
+                                  this.router.navigate(['/dine'],{queryParams: {type:'dine'}});
+
 
                               }, 500);
 

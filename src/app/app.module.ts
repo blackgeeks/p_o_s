@@ -15,6 +15,7 @@ import {MenupopverPageModule} from './menu/components/menupopver/menupopver.modu
 import { SQLite} from '@ionic-native/sqlite/ngx';
 import {SettlementpopoverPageModule} from './menu/components/settlementpopover/settlementpopover.module';
 import { TablesComponent } from './components/tables/tables.component';
+import {TransfertablePageModule} from './dine/popups/transfertable/transfertable.module';
 @NgModule({
     declarations: [AppComponent,
 
@@ -26,6 +27,7 @@ import { TablesComponent } from './components/tables/tables.component';
         IonicStorageModule.forRoot(),
         PopoverPageModule,
         SettlementpopoverPageModule,
+        TransfertablePageModule,
         MenupopverPageModule],
     providers: [
         StatusBar,

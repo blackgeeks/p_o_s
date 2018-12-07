@@ -1938,7 +1938,7 @@ export class MenuPage implements OnInit {
         //     .then(
         //         () => {
         //         },
-        //         error => console.error('Error storing item', error)
+        //         error => //console.error('Error storing item', error)
         //     );
         //
 
@@ -1946,9 +1946,9 @@ export class MenuPage implements OnInit {
             this.storage.get('menu').then((data) => {
 
                 this.menu = data;
-                console.log(this.menu);
+                //console.log(this.menu);
             }, error => {
-                console.log('error while retreiving resturent');
+                //console.log('error while retreiving resturent');
             });
 
 
@@ -1967,10 +1967,11 @@ export class MenuPage implements OnInit {
             this.waiter = params['waiter'];
             this.table = params['table'];
             this.edit = params['edit'];
-            console.log(this.edit);
+            //console.log(this.edit);
             if (this.edit == 'true') {
                 this.storage.get(this.table).then((data) => {
                     console.log(data);
+                    
                     this.cartService.items = data.order;
                     this.waiter = data.waiter;
                 }, error => {
@@ -1986,7 +1987,7 @@ export class MenuPage implements OnInit {
         for (let data of this.menu) {
             if (data.id === id) {
                 this.selectedCatItems = data.menuItemsById;
-                console.log(this.selectedCatItems);
+                //console.log(this.selectedCatItems);
             }
         }
     }
@@ -2026,7 +2027,7 @@ export class MenuPage implements OnInit {
 
         this.storage.get('tables').then((data) => {
 
-            console.log(data);
+            //console.log(data);
             for (let table of data) {
                 if (table.name == this.table) {
                     table.status = 'on going';
@@ -2035,18 +2036,18 @@ export class MenuPage implements OnInit {
                 }
             }
 
-            console.log(data);
+            //console.log(data);
             this.storage.remove('tables');
 
             this.storage.set('tables', data);
 
 
             setTimeout(() => {
-                this.router.navigate(['']);
+                this.router.navigate(['/dine'],{queryParams: {type:'dine'}});
             }, 200);
 
         }, error => {
-            console.log('error while retreiving resturent');
+            //console.log('error while retreiving resturent');
         });
     }
 
@@ -2067,7 +2068,7 @@ export class MenuPage implements OnInit {
 
         this.storage.get('tables').then((data) => {
 
-            console.log(data);
+            //console.log(data);
             for (let table of data) {
                 if (table.name == this.table) {
                     table.status = 'bill processing';
@@ -2076,17 +2077,18 @@ export class MenuPage implements OnInit {
                 }
             }
 
-            console.log(data);
+            //console.log(data);
             this.storage.remove('tables');
 
             this.storage.set('tables', data);
 
             setTimeout(() => {
-                this.router.navigate(['']);
+                this.router.navigate(['/dine'],{queryParams: {type:'dine'}});
+
             }, 200);
 
         }, error => {
-            console.log('error while retreiving resturent');
+            //console.log('error while retreiving resturent');
         });
     }
 
@@ -2100,7 +2102,7 @@ export class MenuPage implements OnInit {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
-                        console.log('Confirm Cancel: blah');
+                        //console.log('Confirm Cancel: blah');
                     }
                 }, {
                     text: 'Yes',
@@ -2126,7 +2128,7 @@ export class MenuPage implements OnInit {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
-                        console.log('Confirm Cancel: blah');
+                        //console.log('Confirm Cancel: blah');
                     }
                 }, {
                     text: 'Yes',

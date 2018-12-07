@@ -4,6 +4,9 @@ import {PopoverPage} from '../popover/popover.page';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {LocalinfoService} from '../services/resturent/localinfo.service';
+import {TablesinfoService} from '../services/tables/tablesinfo.service';
+import {SettlementpopoverPage} from '../menu/components/settlementpopover/settlementpopover.page';
+import {TransfertablePage} from './popups/transfertable/transfertable.page';
 
 @Component({
     selector: 'app-dine',
@@ -18,32 +21,9 @@ export class DinePage implements OnInit , AfterViewInit{
     type = '';
 
     constructor(private router: Router, public popoverController: PopoverController, public resturentInfo: LocalinfoService,
-                public modalCtrl: ModalController,
+                public modalCtrl: ModalController, public tableInfo: TablesinfoService,
                 private storage: Storage, private route: ActivatedRoute) {
 
-
-        this.storage.get('tables').then((data) => {
-
-            this.tables = data;
-            console.log(data);
-
-        }, error => {
-            console.log('error while getting tables');
-
-            setTimeout(() => {
-                this.storage.get('tables').then((data) => {
-
-                    this.tables = data;
-                    console.log(data);
-
-                }, error => {
-                    console.log('error while getting tables');
-
-                });
-
-
-            }, 3000);
-        });
 
 
     }
@@ -54,42 +34,16 @@ export class DinePage implements OnInit , AfterViewInit{
 
         this.route.queryParams.subscribe(params => {
             this.type = params['type'];
-            this.storage.get('tables').then((data) => {
 
-                this.tables = data;
-                this.isLoaded=true;
+            this.tableInfo.refreshtablestats();
 
-                console.log(data);
-
-            }, error => {
-                console.log('error while getting tables');
-
-            });
-
-
-        })
+        });
 
 
 
     }
     ngAfterViewInit(){
-        this.storage.get('tables').then((data) => {
 
-            this.tables = data;
-            console.log(data);
-
-        }, error => {
-            console.log('error while getting tables');
-        });
-
-    }
-
-    async presentPopover(ev: Event) {
-        const popover = await this.popoverController.create({
-            component: PopoverPage,
-            event: ev
-        });
-        return await popover.present();
     }
 
     async openMenuModal(tablename: any) {
@@ -132,6 +86,14 @@ export class DinePage implements OnInit , AfterViewInit{
 
 
 
+    }
+
+
+    async openTransferTable() {
+        const modal = await this.modalCtrl.create({
+            component: TransfertablePage,
+        });
+        await modal.present();
     }
 
 }

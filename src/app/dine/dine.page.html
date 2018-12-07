@@ -1,68 +1,72 @@
 <ion-header>
 
     <ion-toolbar>
-        <ion-label style="padding-right:5% "><a  routerLink="" >{{resturentInfo.getResturentName()}}</a></ion-label>
+        <ion-label style="padding-right:5% "><a routerLink="">{{resturentInfo.getResturentName()}}</a></ion-label>
 
         <ion-label>Dine</ion-label>
-
-        <ion-label style="padding-left:1% " (click)="refreshtablestats()"> Refresh Tables</ion-label>
-
     </ion-toolbar>
 </ion-header>
-<ng-container>
 <ion-content padding>
+    <ng-container>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="8">
+                    <ion-row>
 
-<!--<ng-container *ngIf="tables.length==0">-->
-    <!--{{refreshtablestats()}}-->
-<!--</ng-container>-->
-    <ng-container *ngIf="tables?.length>0">
-    <ion-grid>
-        <ion-row>
-            <ng-container *ngFor="let table of tables; let i=index">
-                <ng-container *ngIf="table?.status=='empty'" >
-            <ion-col size="2" (click)="openMenuModal(table?.name)">
-                <ion-item  style="background-color: #0ec254; cursor: pointer">
-                    <ion-avatar slot="start">
-                        <img src="../../assets/images/dinngtable.png" />
-                    </ion-avatar>
-                    <ion-label>
-                        <h2>{{table?.name}}</h2>
-                    </ion-label>
-                </ion-item>
-            </ion-col>
-                </ng-container>
+                        <ng-container *ngFor="let table of tableInfo.getTables(); let i=index">
+                            <ng-container *ngIf="table?.status=='empty'">
 
-                <ng-container *ngIf="table?.status=='on going'" >
-                    <ion-col size="2" (click)="gotoMenu(table?.name)">
-                        <ion-item  style="background-color: #d33939; cursor: pointer">
-                            <ion-avatar slot="start">
-                                <img src="../../assets/images/dinngtable.png" />
-                            </ion-avatar>
-                            <ion-label>
-                                <h2>{{table?.name}}</h2>
-                            </ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ng-container>
+                                <ion-col size="3" (click)="openMenuModal(table?.name)">
+                                    <ion-item style="background-color: #0ec254; cursor: pointer">
+                                        <ion-avatar slot="start">
+                                            <img src="../../assets/images/dinngtable.png"/>
+                                        </ion-avatar>
+                                        <ion-label>
+                                            <h2>{{table?.name}}</h2>
+                                        </ion-label>
+                                    </ion-item>
+                                </ion-col>
+                            </ng-container>
+
+                            <ng-container *ngIf="table?.status=='on going'">
+                                <ion-col size="3" (click)="gotoMenu(table?.name)">
+                                    <ion-item style="background-color: #d33939; cursor: pointer">
+                                        <ion-avatar slot="start">
+                                            <img src="../../assets/images/dinngtable.png"/>
+                                        </ion-avatar>
+                                        <ion-label>
+                                            <h2>{{table?.name}}</h2>
+                                        </ion-label>
+                                    </ion-item>
+                                </ion-col>
+                            </ng-container>
 
 
-                <ng-container *ngIf="table?.status=='bill processing'" >
-                    <ion-col size="2" (click)="gotoMenu(table?.name)">
-                        <ion-item  style="background-color: #0bb8cc; cursor: pointer">
-                            <ion-avatar slot="start">
-                                <img src="../../assets/images/dinngtable.png" />
-                            </ion-avatar>
-                            <ion-label>
-                                <h2>{{table?.name}}</h2>
-                            </ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ng-container>
-            </ng-container>
-        </ion-row>
+                            <ng-container *ngIf="table?.status=='bill processing'">
+                                <ion-col size="3" (click)="gotoMenu(table?.name)">
+                                    <ion-item style="background-color: #0bb8cc; cursor: pointer">
+                                        <ion-avatar slot="start">
+                                            <img src="../../assets/images/dinngtable.png"/>
+                                        </ion-avatar>
+                                        <ion-label>
+                                            <h2>{{table?.name}}</h2>
+                                        </ion-label>
+                                    </ion-item>
+                                </ion-col>
+                            </ng-container>
+                        </ng-container>
+                    </ion-row>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-button color="success" expand="block" (click)="openTransferTable()">Transfer Table
+                    </ion-button>
+                    <ion-button color="success" expand="block">Merge Table</ion-button>
 
-    </ion-grid>
+                </ion-col>
+
+            </ion-row>
+
+        </ion-grid>
 
     </ng-container>
 </ion-content>
-</ng-container>

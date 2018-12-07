@@ -25,5 +25,20 @@ a{
 
 .custom-font{
   font-size: 14px;
-  padding-left: 2% ;
+  //padding-left: 2% ;
+}
+ion-button{
+  padding: 1px 0px;
+}
+
+ion-card-content.card-content.card-content-md.hydrated{
+  padding: 3px 6px;
+}
+h5{
+  margin: 0px !important;
+}
+
+.card-overfllow{
+  height: 50%;
+  overflow-y: scroll;
 }

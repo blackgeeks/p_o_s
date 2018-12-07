@@ -7,6 +7,7 @@ import {Storage} from '@ionic/storage';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import {DatabaseService} from '../services/database/database.service';
 import {LocalinfoService} from '../services/resturent/localinfo.service';
+import {TablesinfoService} from '../services/tables/tablesinfo.service';
 
 
 @Component({
@@ -19,7 +20,10 @@ export class HomePage {
     resturent: any;
 
     constructor(private router: Router, private navCtrl: NavController, public resturentInfo: LocalinfoService,
-                private nativeStorage: NativeStorage, private storage: Storage) {
+                private nativeStorage: NativeStorage, private storage: Storage, private tableInfo: TablesinfoService) {
+
+
+        this.tableInfo.refreshtablestats();
 
         this.storage.set('branch',{
             "id": 3,
