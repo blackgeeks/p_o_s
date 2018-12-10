@@ -8,6 +8,7 @@ import {ToastmanagerService} from '../services/toast/toastmanager.service';
 import {SettlementpopoverPage} from './components/settlementpopover/settlementpopover.page';
 import {LocalinfoService} from '../services/resturent/localinfo.service';
 import {TablesinfoService} from '../services/tables/tablesinfo.service';
+import {InvoicedetailPage} from './components/invoicedetail/invoicedetail.page';
 
 @Component({
     selector: 'app-menu',
@@ -23,9 +24,11 @@ export class MenuPage implements OnInit {
     edit = 'false';
     menu: any;
     selectedCatItems: any;
+    keyword_Search = '';
+    selectedIndex=0;
 
     constructor(private storage: Storage, private router: Router, public alertController: AlertController, public  tableInfo: TablesinfoService,
-                public modalCtrl: ModalController, private toastManager: ToastmanagerService,public resturentInfo: LocalinfoService,
+                public modalCtrl: ModalController, private toastManager: ToastmanagerService, public resturentInfo: LocalinfoService,
                 public cartService: CartserviceService, private route: ActivatedRoute) {
         //
         // this.storage.set('menu', [
@@ -1946,9 +1949,10 @@ export class MenuPage implements OnInit {
             this.storage.get('menu').then((data) => {
 
                 this.menu = data;
-                //console.log(this.menu);
+                this.selectedCatItems = this.menu[0].menuItemsById;
+                ////console.log(this.menu);
             }, error => {
-                //console.log('error while retreiving resturent');
+                ////console.log('error while retreiving resturent');
             });
 
 
@@ -1967,11 +1971,11 @@ export class MenuPage implements OnInit {
             this.waiter = params['waiter'];
             this.table = params['table'];
             this.edit = params['edit'];
-            //console.log(this.edit);
+            ////console.log(this.edit);
             if (this.edit == 'true') {
                 this.storage.get(this.table).then((data) => {
-                    console.log(data);
-                    
+                    //console.log(data);
+
                     this.cartService.items = data.order;
                     this.waiter = data.waiter;
                 }, error => {
@@ -1984,12 +1988,10 @@ export class MenuPage implements OnInit {
 
     selectItems(id) {
 
-        for (let data of this.menu) {
-            if (data.id === id) {
-                this.selectedCatItems = data.menuItemsById;
-                //console.log(this.selectedCatItems);
-            }
-        }
+        this.selectedIndex=id;
+
+        this.selectedCatItems = this.menu[this.selectedIndex].menuItemsById;
+
     }
 
 
@@ -2015,6 +2017,19 @@ export class MenuPage implements OnInit {
         await modal.present();
     }
 
+
+
+
+    async openInvoiceModal() {
+        const modal = await this.modalCtrl.create({
+            component: InvoicedetailPage,
+            componentProps: {
+                table: this.table
+            }
+        });
+        await modal.present();
+    }
+
     placeorder() {
 
         this.toastManager.presentToastWithCustomOptions('Order Placed');
@@ -2024,10 +2039,9 @@ export class MenuPage implements OnInit {
             'status': 'active',
             'waiter': this.waiter
         });
-
         this.storage.get('tables').then((data) => {
 
-            //console.log(data);
+            ////console.log(data);
             for (let table of data) {
                 if (table.name == this.table) {
                     table.status = 'on going';
@@ -2036,18 +2050,17 @@ export class MenuPage implements OnInit {
                 }
             }
 
-            //console.log(data);
+            ////console.log(data);
             this.storage.remove('tables');
 
             this.storage.set('tables', data);
 
 
             setTimeout(() => {
-                this.router.navigate(['/dine'],{queryParams: {type:'dine'}});
+                this.router.navigate(['/dine'], {queryParams: {type: 'dine'}});
             }, 200);
 
         }, error => {
-            //console.log('error while retreiving resturent');
         });
     }
 
@@ -2059,37 +2072,22 @@ export class MenuPage implements OnInit {
     }
 
     printInv() {
-        // if (window) {
-        //     window.print();
-        // } else {
-        //     alert('Print error');
-        // }
-
-
-        this.storage.get('tables').then((data) => {
-
-            //console.log(data);
-            for (let table of data) {
-                if (table.name == this.table) {
-                    table.status = 'bill processing';
-
-
-                }
-            }
-
-            //console.log(data);
-            this.storage.remove('tables');
-
-            this.storage.set('tables', data);
-
-            setTimeout(() => {
-                this.router.navigate(['/dine'],{queryParams: {type:'dine'}});
-
-            }, 200);
-
-        }, error => {
-            //console.log('error while retreiving resturent');
-        });
+        this.openInvoiceModal()
+        //
+        // this.storage.get('tables').then((data) => {
+        //
+        //     for (let table of data) {
+        //         if (table.name == this.table) {
+        //             table.status = 'bill processing';
+        //         }
+        //     }
+        //     this.storage.remove('tables');
+        //     this.storage.set('tables', data);
+        //     setTimeout(() => {
+        //         this.router.navigate(['/dine'], {queryParams: {type: 'dine'}});
+        //     }, 200);
+        // }, error => {
+        // });
     }
 
     async presentAlertConfirm() {
@@ -2102,7 +2100,7 @@ export class MenuPage implements OnInit {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
-                        //console.log('Confirm Cancel: blah');
+                        ////console.log('Confirm Cancel: blah');
                     }
                 }, {
                     text: 'Yes',
@@ -2128,12 +2126,12 @@ export class MenuPage implements OnInit {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
-                        //console.log('Confirm Cancel: blah');
+                        ////console.log('Confirm Cancel: blah');
                     }
                 }, {
                     text: 'Yes',
                     handler: () => {
-                       this.placeorder()
+                        this.placeorder();
                     }
                 }
             ]
@@ -2144,13 +2142,16 @@ export class MenuPage implements OnInit {
 
 
     cancelorder() {
-
         this.presentAlertConfirm();
     }
 
     settlment() {
-
         this.openSettlementModal();
+    }
+
+    onInput(event: any) {
+        let items=this.menu[this.selectedIndex].menuItemsById;
+        this.selectedCatItems = items.filter(d => d.name.toLocaleLowerCase().includes(this.keyword_Search.toLocaleLowerCase()))
     }
 
 }

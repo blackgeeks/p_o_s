@@ -16,6 +16,7 @@ import { SQLite} from '@ionic-native/sqlite/ngx';
 import {SettlementpopoverPageModule} from './menu/components/settlementpopover/settlementpopover.module';
 import { TablesComponent } from './components/tables/tables.component';
 import {TransfertablePageModule} from './dine/popups/transfertable/transfertable.module';
+import {InvoicedetailPageModule} from './menu/components/invoicedetail/invoicedetail.module';
 @NgModule({
     declarations: [AppComponent,
 
@@ -26,6 +27,7 @@ import {TransfertablePageModule} from './dine/popups/transfertable/transfertable
         AppRoutingModule,
         IonicStorageModule.forRoot(),
         PopoverPageModule,
+        InvoicedetailPageModule,
         SettlementpopoverPageModule,
         TransfertablePageModule,
         MenupopverPageModule],

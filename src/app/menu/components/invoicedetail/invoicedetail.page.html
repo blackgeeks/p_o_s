@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>invoicedetail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-row>
+    <ion-col size="6"><h5 style="font-size: 15px"> Sub Total:</h5></ion-col>
+    <ion-col size="6"><h5 style="font-size: 15px"><b> {{cartService.getSubtotal()}}</b></h5></ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col size="6"><h5 style="font-size: 15px"> Tax:</h5></ion-col>
+    <ion-col size="6"><h5 style="font-size: 15px"><b> {{cartService.getTax()}} %</b></h5></ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6"><h5 style="font-size: 15px"> Grand Total:</h5></ion-col>
+    <ion-col size="6"><h5 style="font-size: 15px"><b>  {{cartService.getGrandTotal()  | number:'1.2-2' }}</b></h5></ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col size="6"><h5 style="font-size: 15px"> Coupon:</h5></ion-col>
+    <ion-col size="6">
+      <ion-input required  [(ngModel)]="coupon" name="coupon" placeholder="Coupon Here"></ion-input>
+
+    </ion-col>
+  </ion-row>
+
+  <ion-button margin-end="0" color="success"  expand="block"  (click)="printInv()" >Print</ion-button>
+
+</ion-content>

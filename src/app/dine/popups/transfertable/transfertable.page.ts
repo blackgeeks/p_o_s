@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TablesinfoService} from '../../../services/tables/tablesinfo.service';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
-import {ModalController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 
 @Component({
     selector: 'app-transfertable',
@@ -18,6 +18,7 @@ export class TransfertablePage implements OnInit {
 
     constructor(public tableInfo: TablesinfoService,
                 private storage: Storage,
+                public alertController: AlertController,
                 public modalCtrl: ModalController,
                 private router: Router) {
         this.tableInfo.getOccupiedTables();
@@ -75,7 +76,8 @@ export class TransfertablePage implements OnInit {
 
               this.modalCtrl.dismiss()
               setTimeout(() => {
-                  this.router.navigate(['/home']);
+                  this.tableInfo.refreshtablestats();
+                  this.router.navigate(['/dine'],{queryParams: {type:'dine'}});
               }, 200);
           }, error => {
               console.log('error while getting tables');
@@ -86,4 +88,30 @@ export class TransfertablePage implements OnInit {
         alert('Please select Tables first')
       }
     }
+
+
+    async confirmationbeforePlaceorder() {
+        const alert = await this.alertController.create({
+            header: 'Transfer Confirmation!',
+            message: 'Are you sured to transfer table?',
+            buttons: [
+                {
+                    text: 'No, Get me back',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        //console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Yes',
+                    handler: () => {
+                        this.transferTable()
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
 }
