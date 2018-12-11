@@ -65,18 +65,17 @@ export class MenupopverPage implements OnInit {
         if (this.itemMeal !== '') {
             this.cartService.setItem(name, this.itemMeal, this.itemPrice, itemscount);
             console.log(this.cartService.items.length);
-            let lastItem=this.cartService.items.length-1;
-            for(let adon of this.adOnslocal){
-                this.cartService.items[lastItem].insertAdOn(adon.name,adon.price,1,adon.type)
+            let lastItem = this.cartService.items.length - 1;
+            for (let adon of this.adOnslocal) {
+                this.cartService.items[lastItem].insertAdOn(adon.name, adon.price, 1, adon.type);
             }
 
-            console.log(this.cartService.items)
+            console.log(this.cartService.items);
 
             this.presentToastWithOptions();
             this.modalCtrl.dismiss();
 
-        }
-        else {
+        } else {
             this.presentToastWithCustomOptions('Please select any meal first');
         }
 
@@ -88,13 +87,14 @@ export class MenupopverPage implements OnInit {
             showCloseButton: true,
             position: 'middle',
             closeButtonText: 'Done',
-            duration: 2000
+            duration: 200
         });
         toast.present();
     }
 
-    selectMeal(item: any) {
-        console.log(item);
+    selectMeal(event: any, item: any) {
+        // console.log(event);
+        $("#"+event).prop('checked', true);
         this.itemPrice = item.price;
         this.itemMeal = item.serving;
         console.log(this.itemMeal);
@@ -134,14 +134,12 @@ export class MenupopverPage implements OnInit {
                         'type': type,
                     });
                     console.log(this.adOnslocal);
-                }
-                else {
+                } else {
                     console.log(event.detail.checked);
                     console.log(this.adOnslocal);
 
                 }
-            }
-            else {
+            } else {
                 alert('you are not allowed to select more than allowed items');
                 $('#' + adon.id).prop('checked', false);
 

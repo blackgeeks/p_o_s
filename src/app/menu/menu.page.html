@@ -1,13 +1,13 @@
 <ion-header>
     <ion-toolbar>
-        <ion-label style="padding-right:5% "><a  routerLink="" >{{resturentInfo.getResturentName()}}</a></ion-label>
+        <ion-label style="padding-right:5% "><a routerLink="">{{resturentInfo.getResturentName()}}</a></ion-label>
 
         <ion-label>menu</ion-label>
     </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
 
 
     <ion-grid>
@@ -28,7 +28,7 @@
                                        placeholder="Filter Menu"
                                        animated="true"
                                        debounce="12"
-                                       [(ngModel)]="keyword_Search"  (ionChange)="onInput($event)"></ion-searchbar>
+                                       [(ngModel)]="keyword_Search" (ionChange)="onInput($event)"></ion-searchbar>
 
                         <ion-row>
                             <ng-container *ngFor="let item of selectedCatItems">
@@ -51,17 +51,17 @@
                     </ion-col>
                     <ion-col size="4">
 
-                        <h5>Order Information ( {{table}} )</h5>
+                        <h5>{{table}} -      {{waiter}}
+                        </h5>
 
-                        <ion-item>
+                        <!--<ion-item>-->
 
-                            <ion-label>
-                                {{waiter}}
-                            </ion-label>
-                            <ion-label>
-                                {{type}}
-                            </ion-label>
-                        </ion-item>
+                        <!--<ion-label>-->
+                        <!--</ion-label>-->
+                        <!--<ion-label>-->
+                        <!--{{type}}-->
+                        <!--</ion-label>-->
+                        <!--</ion-item>-->
                         <ng-container *ngIf="cartService.getItems().length>0">
 
                             <ion-card class="card-overfllow">
@@ -70,11 +70,10 @@
                                     <ion-row no-padding>
 
                                         <ion-col size="1" text-center>
-                                            <ion-icon name="remove" (click)="removeitemfromCart(item)"></ion-icon>
-
+                                            <ion-label class="custom-font"> {{item.itemsCount}}</ion-label>
                                         </ion-col>
-                                        <ion-col size="3" text-center>
-                                            <ion-label class="custom-font"> <b>{{item.itemName}}</b></ion-label>
+                                        <ion-col size="4" text-center>
+                                            <ion-label class="custom-font"><b>{{item.itemName}}</b></ion-label>
 
 
                                         </ion-col>
@@ -86,8 +85,9 @@
                                             <ion-label class="custom-font"><b> {{item.price}}</b></ion-label>
 
                                         </ion-col>
-                                        <ion-col size="2" text-center>
-                                            <ion-label class="custom-font"> {{item.itemsCount}}</ion-label>
+                                        <ion-col size="1" text-center>
+
+                                            <ion-icon name="close" (click)="removeitemfromCart(item)"></ion-icon>
 
                                         </ion-col>
                                     </ion-row>
@@ -100,17 +100,31 @@
                             </ion-card>
 
 
+                            <div style="margin-top: 4px">
+                                <ion-label class="cart-class-padding"> Sub Total:</ion-label>
+                                <ion-label class="float-cart">{{cartService.getSubtotal()}}</ion-label>
+                                <h5></h5>
+                                <ion-label class="cart-class-padding"> Tax:</ion-label>
+                                <ion-label class="float-cart">{{cartService.getTax() }} %</ion-label>
+                                <h5></h5>
+                                <ion-label class="cart-class-padding"> Grand Total:</ion-label>
+                                <ion-label class="float-cart"><b> {{cartService.getGrandTotal()  | number:'1.2-2' }}</b>
+                                </ion-label>
+                            </div>
+                            <ion-button color="success" expand="block" *ngIf="edit=='false'"
+                                        (click)="confirmationbeforePlaceorder()">Place Order
+                            </ion-button>
+                            <ion-button color="success" *ngIf="edit=='true'" expand="block"
+                                        (click)="confirmationbeforePlaceorder()">Update Order
+                            </ion-button>
+                            <ion-button color="danger" expand="block" (click)="cancelorder()">Cancel Order</ion-button>
 
-                            <h5 style="font-size: 15px"> Sub Total:<b> {{cartService.getSubtotal()}}</b></h5>
-                            <h5 style="font-size: 15px"> Tax: <b>{{cartService.getTax() }} %</b></h5>
-                            <h5 style="font-size: 15px"> Grand Total:<b> {{cartService.getGrandTotal()  | number:'1.2-2' }}</b></h5>
-
-                            <ion-button color="success"  expand="block" *ngIf="edit=='false'" (click)="confirmationbeforePlaceorder()"  >Place Order </ion-button>
-                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="confirmationbeforePlaceorder()"  >Update Order </ion-button>
-                            <ion-button color="danger"  expand="block" (click)="cancelorder()"  >Cancel Order </ion-button>
-
-                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="printInv()"  > Print Invoice </ion-button>
-                            <ion-button color="success"  *ngIf="edit=='true'" expand="block" (click)="settlment()"  > Settlement </ion-button>
+                            <ion-button color="success" *ngIf="edit=='true'" expand="block" (click)="printInv()"> Print
+                                Invoice
+                            </ion-button>
+                            <ion-button color="success" *ngIf="edit=='true'" expand="block" (click)="settlment()">
+                                Settlement
+                            </ion-button>
 
                         </ng-container>
                         <ng-container *ngIf="cartService.getItems().length===0">

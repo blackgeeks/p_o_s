@@ -16,7 +16,7 @@
                         <ng-container *ngFor="let table of tableInfo.getTables(); let i=index">
                             <ng-container *ngIf="table?.status=='empty'">
 
-                                <ion-col size="3" (click)="openMenuModal(table?.name)">
+                                <ion-col size="3" style="size: 40px" (click)="openMenuModal(table?.name)">
                                     <ion-item style="background-color: #0ec254; cursor: pointer">
                                         <ion-avatar slot="start">
                                             <img src="../../assets/images/dinngtable.png"/>

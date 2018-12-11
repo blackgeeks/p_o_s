@@ -1,111 +1,85 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{item?.name}}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>{{item?.name}}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-grid>
-    <ion-row >
-      <ion-col size="2">
-      </ion-col>
-      <ion-col size="4">
-        Servings
-      </ion-col>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="2">
+            </ion-col>
+            <ion-col size="4">
+                Servings
+            </ion-col>
 
-      <ion-col size="2">
-        Price (RS)
-      </ion-col >
+            <ion-col size="2">
+                Price (RS)
+            </ion-col>
 
-      <ion-col size="1"></ion-col>
-      <ion-col size="3">
-        Quantity
-      </ion-col>
-
-      <!--<ng-container  *ngFor="let serving of item?.menuItemTypesById; let i=index">-->
-        <!--<ng-container *ngIf="serving.deleted==false">-->
-          <!--<ion-col size="2">-->
+            <ion-col size="1"></ion-col>
+            <ion-col size="3">
+                Quantity
+            </ion-col>
 
 
 
-            <!--<ion-list>-->
-              <!--<ion-radio-group>-->
-
-                <!--<ion-item>-->
-                  <!--<ion-radio (ionChange)="selectMeal()" value="cord"></ion-radio>-->
-                <!--</ion-item>-->
-
-              <!--</ion-radio-group>-->
-            <!--</ion-list>-->
-
-          <!--</ion-col>-->
-
-          <!--<ion-col size="4">-->
-        <!--<h5>{{serving.serving}}</h5>-->
-
-      <!--</ion-col>-->
-
-        <!--<ion-col size="2">-->
-          <!--<h5>{{serving.price}}</h5>-->
-
-        <!--</ion-col>-->
-
-        <!--<ion-col size="4">-->
-          <!--<ion-button color="success"  expand="block"  >Add </ion-button>-->
-
-        <!--</ion-col>-->
-        <!--</ng-container>-->
-      <!--</ng-container>-->
-
-      <ion-col size="2">
+            <ion-col size="2">
 
 
-        <ion-radio-group>
+                <ion-radio-group>
 
-          <h5  *ngFor="let serving of item?.menuItemTypesById; let i=index">
-             <ion-radio (ionSelect)="selectMeal(serving)" value={{serving.id}}></ion-radio>
-          </h5>
-       </ion-radio-group>
-      </ion-col>
-
-
-      <ion-col size="4">
-
-        <h5 *ngFor="let serving of item?.menuItemTypesById; let i=index">{{serving.serving}}</h5>
-      </ion-col>
+                    <h5 *ngFor="let serving of item?.menuItemTypesById; let i=index">
+                        <ion-radio [id]="i" (ionSelect)="selectMeal(i,serving)" value={{serving.id}}></ion-radio>
+                    </h5>
+                </ion-radio-group>
+            </ion-col>
 
 
-      <ion-col size="2">
+            <ion-col size="4">
+<ng-container *ngFor="let serving of item?.menuItemTypesById; let i=index" >
+                <h5 (click)="selectMeal(i,serving)">{{serving.serving}}</h5>
+</ng-container>
+            </ion-col>
 
-        <h5 *ngFor="let serving of item?.menuItemTypesById; let i=index">{{serving.price}}</h5>
-      </ion-col>
-      <ion-col size="4">
-        <ion-item  *ngFor="let serving of item?.menuItemTypesById; let i=index">
-          <ion-icon name="remove" (click)="reduceCount()"></ion-icon>
-          <ion-input style="margin-left: 25%" placeholder="Enter Input" [(ngModel)]="itemsCount"></ion-input>
-          <ion-icon name="add-circle" (click)="incrimentCount()"></ion-icon>
-        </ion-item>
-      </ion-col>
 
-    </ion-row>
-  </ion-grid>
+            <ion-col size="2">
+                <ng-container *ngFor="let serving of item?.menuItemTypesById; let i=index" >
 
-  <!--<p *ngIf="adOns">AdOns Here.</p>-->
-  <ion-grid>
-    <ion-row>
-      <ng-container *ngFor="let adon of adOns">
-      <ion-col size="6">
-        <p>{{adon?.addOnCategory?.name}} ({{adon?.addOnCategory?.allowedItems}}) </p>
+                <h5 (click)="selectMeal(i,serving)">{{serving.price}}</h5>
+                </ng-container>
+            </ion-col>
+            <ion-col size="4">
+                <ion-item *ngFor="let serving of item?.menuItemTypesById; let i=index">
+                    <ion-icon name="remove" (click)="reduceCount()"></ion-icon>
+                    <ion-input style="margin-left: 25%" placeholder="Enter Input" [(ngModel)]="itemsCount"></ion-input>
+                    <ion-icon name="add-circle" (click)="incrimentCount()"></ion-icon>
+                </ion-item>
+            </ion-col>
 
-        <ng-container *ngFor="let item of adon?.addOnCategory?.addOnItemsById">
-         <ion-item> <ion-checkbox color="success" [id]="item?.id" (ionChange)="updateMeal($event,adon?.addOnCategory?.allowedItems,adon?.addOnCategory?.name,item)"> </ion-checkbox> <ion-label style="margin-left:5%; ">{{item.name}} - ({{item.price }} RS) </ion-label></ion-item>
-        </ng-container>
-      </ion-col>
-      </ng-container>
-    </ion-row>
-  </ion-grid>
+        </ion-row>
+    </ion-grid>
 
-  <ion-button color="success"  expand="block" (click)="addtoCart(item?.name, itemsCount)"  >Add to Cart </ion-button>
+    <!--<p *ngIf="adOns">AdOns Here.</p>-->
+    <ion-grid>
+        <ion-row>
+            <ng-container *ngFor="let adon of adOns">
+                <ion-col size="6">
+                    <p>{{adon?.addOnCategory?.name}} ({{adon?.addOnCategory?.allowedItems}}) </p>
+
+                    <ng-container *ngFor="let item of adon?.addOnCategory?.addOnItemsById">
+                        <ion-item>
+                            <ion-checkbox color="success" [id]="item?.id"
+                                          (ionChange)="updateMeal($event,adon?.addOnCategory?.allowedItems,adon?.addOnCategory?.name,item)"></ion-checkbox>
+                            <ion-label style="margin-left:5%; ">{{item.name}} - ({{item.price }} RS)</ion-label>
+                        </ion-item>
+                    </ng-container>
+                </ion-col>
+            </ng-container>
+        </ion-row>
+    </ion-grid>
+
+    <ion-button color="success" expand="block" (click)="addtoCart(item?.name, itemsCount)">Add to Cart</ion-button>
 
 </ion-content>
