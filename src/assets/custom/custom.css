@@ -2,3 +2,16 @@ a{
     text-decoration: none;
     font-size: 18px;
 }
+
+.fix-button_bottom{
+    /*position: absolute;*/
+    /*!*right: 0;*!*/
+    /*font-size: 30px;*/
+    /*!*bottom: 0;*!*/
+    /*width: 96%;*/
+    /*left: 0;*/
+}
+
+ion-footer{
+background-color: white;
+}

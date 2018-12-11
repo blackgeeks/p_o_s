@@ -23,7 +23,6 @@
           <ion-label *ngIf="amount-cartService.getSubtotal() > 0" style="font-size: 30px"> <b>{{amount - cartService.getGrandTotal() | number:'1.2-2'}}</b></ion-label>
         </ion-item>
 
-        <ion-button color="success"  expand="block" (click)="finishpayment()" > Finish Payment </ion-button>
 
       </ion-col>
 
@@ -33,3 +32,9 @@
   </ion-grid>
 
 </ion-content>
+
+<ion-footer padding>
+
+  <ion-button color="success"  expand="block" (click)="finishpayment()" > Finish Payment </ion-button>
+
+</ion-footer>
