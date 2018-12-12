@@ -17,11 +17,9 @@
                             <ng-container *ngIf="table?.status=='empty'">
 
                                 <ion-col size="3" style="size: 40px" (click)="openMenuModal(table?.name)">
-                                    <ion-item style="background-color: #0ec254; cursor: pointer">
-                                        <ion-avatar slot="start">
-                                            <img src="../../assets/images/dinngtable.png"/>
-                                        </ion-avatar>
-                                        <ion-label>
+                                    <ion-item style="background-color: #0ec254; cursor: pointer;border-radius: 5px;">
+
+                                        <ion-label style="text-align: center">
                                             <h2>{{table?.name}}</h2>
                                         </ion-label>
                                     </ion-item>
@@ -30,11 +28,11 @@
 
                             <ng-container *ngIf="table?.status=='on going'">
                                 <ion-col size="3" (click)="gotoMenu(table?.name)">
-                                    <ion-item style="background-color: #d33939; cursor: pointer">
-                                        <ion-avatar slot="start">
-                                            <img src="../../assets/images/dinngtable.png"/>
-                                        </ion-avatar>
-                                        <ion-label>
+                                    <ion-item style="background-color: #d33939; cursor: pointer;border-radius: 5px;">
+                                        <!--<ion-avatar slot="start">-->
+                                            <!--<img src="../../assets/images/dinngtable.png"/>-->
+                                        <!--</ion-avatar>-->
+                                        <ion-label style="text-align: center">
                                             <h2>{{table?.name}}</h2>
                                         </ion-label>
                                     </ion-item>
@@ -44,11 +42,11 @@
 
                             <ng-container *ngIf="table?.status=='bill processing'">
                                 <ion-col size="3" (click)="gotoMenu(table?.name)">
-                                    <ion-item style="background-color: #0bb8cc; cursor: pointer">
-                                        <ion-avatar slot="start">
-                                            <img src="../../assets/images/dinngtable.png"/>
-                                        </ion-avatar>
-                                        <ion-label>
+                                    <ion-item style="background-color: #0bb8cc; cursor: pointer;border-radius: 5px;">
+                                        <!--<ion-avatar slot="start">-->
+                                            <!--<img src="../../assets/images/dinngtable.png"/>-->
+                                        <!--</ion-avatar>-->
+                                        <ion-label style="text-align: center">
                                             <h2>{{table?.name}}</h2>
                                         </ion-label>
                                     </ion-item>
@@ -58,7 +56,7 @@
                     </ion-row>
                 </ion-col>
                 <ion-col size="4">
-                    <ion-button color="success" expand="block" (click)="openTransferTable()">Transfer Table
+                    <ion-button color="medium" expand="block" (click)="openTransferTable()">Transfer Table
                     </ion-button>
                     <ion-button color="success" expand="block">Merge Table</ion-button>
 

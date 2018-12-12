@@ -33,7 +33,7 @@
                         <ion-row>
                             <ng-container *ngFor="let item of selectedCatItems">
                                 <ion-col size="3" style="cursor: pointer" (click)="openMenuModal(item)">
-                                    <ion-item style="background-color: #0ec254; cursor: pointer">
+                                    <ion-item style="background-color: #0ec254; cursor: pointer;     border-radius: 6px;">
                                         <!--<ion-avatar slot="start">-->
                                         <!--<img src="../../assets/images/dinngtable.png" />-->
                                         <!--</ion-avatar>-->
@@ -119,10 +119,10 @@
                             </ion-button>
                             <ion-button color="danger" expand="block" (click)="cancelorder()">Cancel Order</ion-button>
 
-                            <ion-button color="success" *ngIf="edit=='true'" expand="block" (click)="printInv()"> Print
+                            <ion-button color="primary" *ngIf="edit=='true'" expand="block" (click)="printInv()"> Print
                                 Invoice
                             </ion-button>
-                            <ion-button color="success" *ngIf="edit=='true'" expand="block" (click)="settlment()">
+                            <ion-button color="medium" *ngIf="edit=='true'" expand="block" (click)="settlment()">
                                 Settlement
                             </ion-button>
 
